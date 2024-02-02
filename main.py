@@ -2,7 +2,11 @@ class Book:
     """ Базовый класс книги. """
 
     def __init__(self, name: str, author: str):
+        if not isinstance(name, str):
+            raise TypeError("Название должно быть str")
         self._name = name
+        if not isinstance(author, str):
+            raise TypeError("Автор должно быть str")
         self._author = author
 
     @property
@@ -38,8 +42,8 @@ class PaperBook(Book):
             raise ValueError("Количество страниц должно быть > 0.")
         self._pages = value
 
-    def __str__(self):
-        return f"{super().__str__()} [бумажная] ({self.pages} страниц)."
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, pages={self.pages!r})"
 
 
 class AudioBook(Book):
@@ -60,14 +64,14 @@ class AudioBook(Book):
             raise ValueError("Продолжительность должна быть > 0.")
         self._duration = float(value)
 
-    def __str__(self):
-        return f"{super().__str__()} [аудио] ({self.duration} минут)."
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, duration={self.duration!r})"
 
 
 if __name__ == "__main__":
     book = Book("book", "<NAME>")
     paper_book = PaperBook("paper book", "<NAME>", 100)
-    audiobook = AudioBook("audiobook", "<NAME>", 100.3)
+    audiobook = AudioBook("audiobook", "<NAME>", 100)
 
     print(book)
     print(paper_book)
